@@ -7,6 +7,9 @@ use lib "$Bin/lib";
 use Test::More tests => 3;
 use Catalyst::Test 'MyApp';
 
+use Data::Dumper;
+use HTML::Entities qw/encode_entities_numeric/;
+
 my $res = request('/');
 ok( $res->is_success, "/ is succcess" );
 
@@ -15,6 +18,31 @@ $content =~ m|plDebugPanelContent.+?<pre>(.*?)</pre>|s;
 ok( $1, "debug panel is there" );
 
 ( my $stripped = $1 ) =~ s/\n\s*//gs;
-is( $stripped, '{&#x27;ar&#x27; =&#x3E; [&#x27;bar&#x27;,1,2,3,{&#x27;key&#x27; =&#x3E; &#x27;value&#x27;},sub {package MyApp::Controller::Root;use warnings;use strict;my($one, $two) = @_;return $one + $two;}]}', 'panel content is correct' );
+$stripped =~ s/package MyApp::Controller::Root;//;
+
+my $should_be;
+{
+    local $Data::Dumper::Terse = 1;
+    local $Data::Dumper::Indent = 1;
+    local $Data::Dumper::Deparse = 1;
+    $should_be = encode_entities_numeric( Dumper( {
+        ar  => [
+            "bar",
+            1,
+            2,
+            3,
+            {
+                key => 'value',
+            },
+            sub {
+                my ( $one, $two ) = @_;
+
+                return $one + $two;
+            },
+        ],
+    } ) );
+    $should_be =~ s/\n\s*//gs;
+}
+is( $stripped, $should_be, 'panel content is correct' );
 
 1;
