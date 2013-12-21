@@ -1,0 +1,4 @@
+Revision history for perl module Plack::Middleware::Debug::CatalystStash
+
+0.001 2013-12-21
+    - First release
