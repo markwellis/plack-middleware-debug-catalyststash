@@ -13,8 +13,8 @@ test_requires 'FindBin';
 test_requires 'Catalyst::Test';
 
 resources(
-    'bugtracker'  => 'https://github.com/n0body-/plack-middleware-debug-catalyststash/issues',
-    'repository'  => 'https://github.com/n0body-/plack-middleware-debug-catalyststash.git',
+    'bugtracker'  => 'https://github.com/markwellis/plack-middleware-debug-catalyststash/issues',
+    'repository'  => 'https://github.com/markwellis/plack-middleware-debug-catalyststash.git',
 );
 
 auto_install;

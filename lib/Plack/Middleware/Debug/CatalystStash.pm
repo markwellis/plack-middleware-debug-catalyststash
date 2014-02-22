@@ -8,7 +8,7 @@ use Class::Method::Modifiers qw(install_modifier);
 use Data::Dumper;
 use HTML::Entities qw/encode_entities_numeric/;
 
-our $VERSION = '0.001';
+our $VERSION = '0.001001';
 
 install_modifier 'Catalyst', 'before', 'finalize' => sub {
     my $c = shift;
@@ -49,15 +49,15 @@ This debug panel displays the stash content from Catalyst applications.
 
 =head1 AUTHOR
 
-n0body E<lt>n0body@thisaintnews.comE<gt>
+Mark Ellis E<lt>markellis@cpan.orgE<gt>
 
 =head1 SEE ALSO
 
-L<http://thisaintnews.com>, L<Plack::Middleware::Debug>
+L<Plack::Middleware::Debug>
 
 =head1 LICENSE
 
-Copyright (C) 2013 by n0body L<http://thisaintnews.com/>
+Copyright 2014 Mark Ellis E<lt>markellis@cpan.orgE<gt>
 
 This library is free software, you can redistribute it and/or modify
 it under the same terms as Perl itself.

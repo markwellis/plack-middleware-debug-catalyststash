@@ -1,4 +1,7 @@
 Revision history for perl module Plack::Middleware::Debug::CatalystStash
 
+0.001001 2014-02-22
+    - changedd gitub repo url
+
 0.001 2013-12-21
     - First release
