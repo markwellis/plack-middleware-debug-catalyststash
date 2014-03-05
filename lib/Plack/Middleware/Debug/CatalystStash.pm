@@ -4,11 +4,13 @@ use strict;
 use warnings;
 use parent qw(Plack::Middleware::Debug::Base);
 
+use Catalyst;
+
 use Class::Method::Modifiers qw(install_modifier);
 use Data::Dumper;
 use HTML::Entities qw/encode_entities_numeric/;
 
-our $VERSION = '0.001001';
+our $VERSION = '0.001002';
 
 install_modifier 'Catalyst', 'before', 'finalize' => sub {
     my $c = shift;
