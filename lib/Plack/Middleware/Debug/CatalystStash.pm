@@ -10,7 +10,8 @@ use Class::Method::Modifiers qw(install_modifier);
 use Data::Dumper;
 use HTML::Entities qw/encode_entities_numeric/;
 
-our $VERSION = '0.001002';
+our $VERSION = '0.001003';
+my $psgi_env;
 
 install_modifier 'Catalyst', 'before', 'finalize' => sub {
     my $c = shift;
@@ -18,18 +19,20 @@ install_modifier 'Catalyst', 'before', 'finalize' => sub {
     local $Data::Dumper::Terse = 1;
     local $Data::Dumper::Indent = 1;
     local $Data::Dumper::Deparse = 1;
-    $c->req->env->{'plack.middleware.catalyst_stash'} =
+    $psgi_env->{'plack.middleware.catalyst_stash'} =
         encode_entities_numeric( Dumper( $c->stash ) );
 };
 
 sub run {
     my($self, $env, $panel) = @_;
+    $psgi_env = $env;
 
     return sub {
         my $res = shift;
 
         my $stash = delete $env->{'plack.middleware.catalyst_stash'} || 'No Stash';
         $panel->content("<pre>$stash</pre>");
+        $psgi_env = undef;
     };
 }
 
