@@ -12,23 +12,23 @@ use HTML::Entities qw/encode_entities_numeric/;
 
 our $VERSION = '0.001002';
 
-install_modifier 'Catalyst', 'before', 'finalize' => sub {
-    my $c = shift;
-
-    local $Data::Dumper::Terse = 1;
-    local $Data::Dumper::Indent = 1;
-    local $Data::Dumper::Deparse = 1;
-    $c->req->env->{'plack.middleware.catalyst_stash'} =
-        encode_entities_numeric( Dumper( $c->stash ) );
-};
-
 sub run {
     my($self, $env, $panel) = @_;
+
+    my $dump;
+    install_modifier 'Catalyst', 'before', 'finalize' => sub {
+        my $c = shift;
+
+        local $Data::Dumper::Terse = 1;
+        local $Data::Dumper::Indent = 1;
+        local $Data::Dumper::Deparse = 1;
+        $dump = encode_entities_numeric( Dumper( $c->stash ) );
+    };
 
     return sub {
         my $res = shift;
 
-        my $stash = delete $env->{'plack.middleware.catalyst_stash'} || 'No Stash';
+        my $stash = $dump || 'No Stash';
         $panel->content("<pre>$stash</pre>");
     };
 }
