@@ -10,7 +10,7 @@ use Class::Method::Modifiers qw(install_modifier);
 use Data::Dumper;
 use HTML::Entities qw/encode_entities_numeric/;
 
-our $VERSION = '0.001002';
+our $VERSION = '1.000000';
 
 install_modifier 'Catalyst', 'before', 'finalize' => sub {
     my $c = shift;
