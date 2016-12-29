@@ -2,7 +2,7 @@ use inc::Module::Install;
 
 all_from('lib/Plack/Middleware/Debug/CatalystStash.pm');
 
-requires 'Catalyst' => '5.90050';
+requires 'Catalyst' => '5.90100';
 requires 'Data::Dumper';
 requires 'Class::Method::Modifiers';
 requires 'HTML::Entities';
